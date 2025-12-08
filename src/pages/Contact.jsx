@@ -18,7 +18,7 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/email/send", {
+      const response = await fetch("https://proyecto-final-backend-3gw2.onrender.com/email/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -28,7 +28,7 @@ const AddProduct = () => {
     console.log(token)
 
     try {
-      const response = await fetch(`http://localhost:3000/products`, {
+      const response = await fetch(`https://proyecto-final-backend-3gw2.onrender.com/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
