@@ -4,6 +4,7 @@ import UpdateProduct from "../components/UpdateProduct"
 import { useAuth } from "../context/AuthContext"
 import { CATEGORIES } from "../constants/categories.js"
 import { ToastMessage } from "../components/ToastMessage.jsx"
+import { getApiUrl } from '../services/api';
 
 const Home = () => {
   const initialErrorState = {
@@ -32,9 +33,9 @@ const Home = () => {
   const fetchingProducts = async (query = "") => {
     setResponseServer(initialErrorState)
     try {
-      const response = await fetch(`https://proyecto-final-backend-3gw2.onrender.com/products?${query}`, {
-        method: "GET"
-      })
+      const response = await fetch(getApiUrl(`/products?${query}`), { 
+        method: "GET"
+      })
       const dataProducts = await response.json()
       setProducts(dataProducts.data.reverse())
       setResponseServer({
@@ -67,8 +68,8 @@ const Home = () => {
     }
 
     try {
-      const response = await fetch(`https://proyecto-final-backend-3gw2.onrender.com/products/${idProduct}`, {
-        method: "DELETE",
+      const response = await fetch(getApiUrl(`/products/${idProduct}`), {
+        method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`
         }
