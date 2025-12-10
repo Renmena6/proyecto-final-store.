@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color:rgba(220, 220, 220, 0.534);
+}
+
 .layout-header {
   background: #111;
   padding: 15px 0;
@@ -42,7 +46,7 @@
 }
 
 .page-banner {
-  background: #eee;
+  background: #faf7f7;
   padding: 30px;
   text-align: center;
   margin-bottom: 20px;
@@ -67,7 +71,7 @@
 }
 
 .product-card {
-  border: 1px solid #ddd;
+  border: 2px solid #cc3535;
   padding: 15px;
   border-radius: 5px;
 }
