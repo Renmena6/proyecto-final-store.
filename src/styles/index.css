@@ -1,270 +1,421 @@
+/* ---------------------------------------------------- */
+/* 1. VARIABLES Y RESET (NEON / DARK THEME) */
+/* ---------------------------------------------------- */
+:root {
+    /* Paleta de Colores Cyberpunk/Neón */
+    --color-background: #111827; /* Fondo Negro Oscuro */
+    --color-surface: #1F2937;    /* Gris muy oscuro para cards y formularios */
+    --color-neon-primary: #00FFFF; /* Cian Brillante (Neón Principal) */
+    --color-neon-secondary: #FF00FF; /* Magenta Brillante (Neón Secundario/Hover) */
+    --color-danger: #EF4444;     /* Rojo para acciones de eliminar (mantener legibilidad) */
+    --color-text: #E5E7EB;       /* Blanco/Gris claro para texto principal */
+    --color-text-dimmed: #9CA3AF; /* Gris suave para etiquetas/descripciones atenuadas */
+
+    /* Tipografías (Asumiendo que has importado 'Inter' y 'Poppins') */
+    --font-primary: 'Inter', sans-serif;
+    --font-heading: 'Poppins', sans-serif;
+
+    /* Efecto Neón (Sombra para simular brillo) */
+    --shadow-neon-primary: 0 0 10px var(--color-neon-primary), 0 0 20px rgba(0, 255, 255, 0.4);
+    --shadow-neon-secondary: 0 0 10px var(--color-neon-secondary), 0 0 20px rgba(255, 0, 255, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+}
+
 * {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    font-family: var(--font-primary);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color:rgba(220, 220, 220, 0.534);
+    background-color: var(--color-background);
+    color: var(--color-text);
 }
 
+/* ---------------------------------------------------- */
+/* 2. LAYOUT Y NAVEGACIÓN */
+/* ---------------------------------------------------- */
 .layout-header {
-  background: #111;
-  padding: 15px 0;
+    background: #000;
+    padding: 20px 0;
+    border-bottom: 2px solid var(--color-neon-primary);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
 }
 
 .layout-nav {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
 }
 
 .layout-nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: opacity .2s ease-in-out;
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: color .3s ease-in-out, text-shadow 0.3s;
 }
 
 .layout-nav a:hover {
-  opacity: 0.6;
+    color: var(--color-neon-primary);
+    text-shadow: 0 0 8px var(--color-neon-primary);
 }
 
 .layout-main {
-  min-height: 90vh;
-  padding: 30px;
+    min-height: 90vh;
+    padding: 40px 20px;
 }
 
 .layout-footer {
-  background: #111;
-  color: #fff;
-  text-align: center;
-  padding: 12px 0;
-  margin-top: 30px;
-  font-size: 0.9rem;
+    background: #000;
+    color: var(--color-text-dimmed);
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 50px;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(0, 255, 255, 0.2);
 }
 
 .page-banner {
-  background: #faf7f7;
-  padding: 30px;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  font-weight: bold;
+    background: var(--color-surface);
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.2rem;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    color: var(--color-neon-primary);
+    border-radius: 5px;
+    box-shadow: var(--shadow-neon-primary);
+    text-shadow: 0 0 5px var(--color-neon-primary);
 }
 
 .page-section {
-  padding: 30px;
-  max-width: 900px;
-  margin: auto;
-  line-height: 1.5rem;
+    padding: 30px 0;
+    max-width: 1000px;
+    margin: auto;
+    line-height: 1.6rem;
+}
+.page-section p {
+    /* El texto de la sección de bienvenida también puede atenuarse ligeramente */
+    color: var(--color-text-dimmed);
+    font-weight: 500;
 }
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-  padding: 20px;
-  max-width: 1100px;
-  margin: auto;
-}
 
-.product-card {
-  border: 2px solid #cc3535;
-  padding: 15px;
-  border-radius: 5px;
-}
-
+/* ---------------------------------------------------- */
+/* 3. FORMULARIOS Y BOTONES (General) */
+/* ---------------------------------------------------- */
 .form-container {
-  max-width: 400px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+    max-width: 450px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+    background: var(--color-surface);
+    border-radius: 10px;
+    border: 1px solid var(--color-neon-primary);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
 .form-container input,
 .form-container select {
-  padding: 10px;
-  border: 1px solid #da8867;
-  border-radius: 5px;
+    padding: 12px;
+    border: 1px solid #4B5563;
+    background: #374151;
+    color: var(--color-text);
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-container input:focus,
+.form-container select:focus {
+    border-color: var(--color-neon-secondary);
+    box-shadow: 0 0 5px var(--color-neon-secondary);
+    outline: none;
 }
 
 .form-container button {
-  padding: 10px;
-  border: none;
-  background: #333;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+    padding: 12px;
+    border: 2px solid var(--color-neon-primary);
+    background: rgba(0, 255, 255, 0.2);
+    color: var(--color-neon-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: background 0.3s, box-shadow 0.3s, color 0.3s;
+}
+
+.form-container button:hover {
+    background: var(--color-neon-primary);
+    color: #111;
+    box-shadow: var(--shadow-neon-primary);
 }
 
 .center-auth {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
 }
 
+/* Contenedor de Botones (Actualizar/Borrar) */
 .cont-btn {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
 }
 
 .cont-btn button {
-  width: 48%;
-  padding: 5px;
-  border: none;
-  border-radius: 4px;
-  color: black;
+    width: 48%;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 5px;
+    font-weight: 600;
+    color: var(--color-text);
+    transition: all 0.3s;
 }
 
+/* Botón Actualizar (Neón Azul) */
 .cont-btn button:first-child {
-  background-color: #698fd6;
+    border-color: #4C9AFF;
+    background-color: rgba(76, 154, 255, 0.2);
+    color: #4C9AFF;
+}
+.cont-btn button:first-child:hover {
+    background-color: #4C9AFF;
+    color: var(--color-surface);
+    box-shadow: 0 0 10px #4C9AFF;
 }
 
+/* Botón Borrar (Danger Rojo) */
 .cont-btn button:last-child {
-  background-color: rgba(190, 19, 19, 0.842);
-  color: white;
+    border-color: var(--color-danger);
+    background-color: rgba(239, 68, 68, 0.2);
+    color: var(--color-danger);
+}
+.cont-btn button:last-child:hover {
+    background-color: var(--color-danger);
+    color: #fff;
+    box-shadow: 0 0 10px var(--color-danger);
 }
 
-/* Styles popup */
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ---------------------------------------------------- */
+/* 4. PRODUCTOS Y FILTROS (AJUSTE FINAL Y ESPECTACULAR) */
+/* ---------------------------------------------------- */
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 30px auto;
 }
 
-.modal-box {
-  background: #fff;
-  padding: 25px;
-  width: 400px;
-  max-width: 90%;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+.product-card {
+    border: 1px solid rgba(0, 255, 255, 0.5); /* Borde neón sutil */
+    padding: 20px;
+    border-radius: 10px;
+    background: var(--color-surface);
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
 
-.close-btn {
-  margin-top: 10px;
-  background: #d33;
-  color: #fff;
-  padding: 10px;
-  width: 100%;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-neon-primary);
 }
 
-.card-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+/* 4.1. Nombre del Producto: Resaltado Neón Máximo (clase: product-name) */
+.product-name {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-neon-primary);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    /* Efecto de brillo neón */
+    text-shadow: 0 0 7px rgba(0, 255, 255, 0.6);
 }
 
-.card-actions button {
-  padding: 6px 10px;
+/* 4.2. Etiquetas: Atenuado (clase: product-label) */
+.product-label {
+    font-size: 1rem;
+    font-weight: 400; /* Menos audaz */
+    color: var(--color-text-dimmed); /* Gris suave, atenuado */
+    margin-right: 5px;
 }
 
-/* Filter */
+/* 4.3. Valores (Precio/Stock): Claros y Audaces (clase: product-value) */
+.product-value {
+    font-size: 1rem;
+    font-weight: 700; /* Audaz */
+    color: var(--color-text); /* Color claro para el valor */
+}
 
+/* 4.4. Descripción (el <p> sin clases debe ser atenuado) */
+.product-card p:first-of-type {
+    color: var(--color-text-dimmed);
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+/* Filter Section */
 .filters-section {
-  margin: 20px 0;
-  padding: 20px;
-  background: #f4f4f4;
-  border-radius: 10px;
+    margin: 30px auto;
+    max-width: 1000px;
+    padding: 30px;
+    background: var(--color-surface);
+    border-radius: 10px;
+    border: 1px solid var(--color-neon-primary);
+    box-shadow: var(--shadow-neon-primary);
 }
 
 .filters-form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
 }
 
 .filters-form input,
 .filters-form select {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #4B5563;
+    background: #374151;
+    color: var(--color-text);
 }
 
+/* Botones del Formulario de Filtros */
 .filters-form button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background: #333;
-  color: #fff;
+    padding: 12px;
+    border: 2px solid var(--color-neon-secondary);
+    border-radius: 5px;
+    cursor: pointer;
+    background: rgba(255, 0, 255, 0.2);
+    color: var(--color-neon-secondary);
+    font-weight: 700;
+    transition: background 0.3s, box-shadow 0.3s;
 }
 
 .filters-form button:hover {
-  background: #555;
+    background: var(--color-neon-secondary);
+    color: #111;
+    box-shadow: var(--shadow-neon-secondary);
 }
 
-/* Toast styles */
+/* ---------------------------------------------------- */
+/* 5. MODALES, TOAST Y CONTACTO */
+/* ---------------------------------------------------- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
+.modal-box {
+    background: var(--color-surface);
+    padding: 30px;
+    width: 450px;
+    max-width: 90%;
+    border-radius: 10px;
+    border: 1px solid var(--color-neon-primary);
+    box-shadow: var(--shadow-neon-primary);
+}
+
+.close-btn {
+    margin-top: 20px;
+    background: var(--color-danger);
+    color: #fff;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: opacity 0.3s, box-shadow 0.3s;
+}
+.close-btn:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 10px var(--color-danger);
+}
+
+/* Toast styles (Asumiendo que ToastMessage usa la clase 'toast') */
 .toast {
-  width: 300px;
-  padding: 10px 10px 20px 10px;
-  border-radius: 10px;
-  box-shadow: 0 10px 10px 0 #cccccc39;
-  color: white;
-  animation: slide 5s ease;
-  position: fixed;
-  right: 10px;
-}
-
-@keyframes slide {
-  0% {
-    bottom: 30px;
-  }
-
-  30% {
-    bottom: 40px;
-  }
-
-  100% {
-    display: none;
-  }
+    width: 300px;
+    padding: 15px;
+    border-radius: 8px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-neon-secondary);
+    box-shadow: var(--shadow-neon-secondary);
+    color: var(--color-text);
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1001;
+    animation: slide-in 0.5s forwards; /* Simplificamos la animación en este ejemplo */
 }
 
 .contact-form {
-  max-width: 450px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.contact-form label {
-  font-weight: bold;
+    max-width: 500px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    background: var(--color-surface);
+    border-radius: 10px;
+    border: 1px solid var(--color-neon-primary);
+    box-shadow: var(--shadow-neon-primary);
 }
 
 .contact-form input,
 .contact-form textarea {
-  padding: 10px;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-  width: 100%;
+    padding: 12px;
+    border: 1px solid #4B5563;
+    background: #374151;
+    color: var(--color-text);
+    border-radius: 5px;
+    width: 100%;
 }
 
 .contact-form button {
-  padding: 12px;
-  background: #111;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
+    padding: 14px;
+    background: rgba(0, 255, 255, 0.2);
+    color: var(--color-neon-primary);
+    border: 2px solid var(--color-neon-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background 0.3s, box-shadow 0.3s;
 }
 
 .contact-form button:hover {
-  opacity: 0.8;
+    background: var(--color-neon-primary);
+    color: #111;
+    box-shadow: var(--shadow-neon-primary);
+}
+
+/* Animación para el Toast */
+@keyframes slide-in {
+    from { right: -300px; }
+    to { right: 20px; }
+}
+
+@keyframes slide-out {
+    from { right: 20px; }
+    to { right: -300px; }
 }
