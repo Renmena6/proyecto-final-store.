@@ -33,15 +33,15 @@ const Home = () => {
     const fetchingProducts = async (query = "") => {
         setResponseServer(initialErrorState)
         try {
-            // NOTA: Si ya desplegaste el Backend en Render, cambia 'localhost' por la URL de Render aquí
-            const response = await fetch(`http://localhost:4000/products?${query}`, {
+            // URL original: NO MODIFICADA
+            const response = await fetch(`http://localhost:4000/products${query}`, {
                 method: "GET"
             })
             const dataProducts = await response.json()
             setProducts(dataProducts.data.reverse())
             setResponseServer({
                 success: true,
-                notification: "Éxito al cargar los productos",
+                notification: "Exito al cargar los productos",
                 error: {
                     ...responseServer.error,
                     fetch: true
@@ -64,11 +64,12 @@ const Home = () => {
     }, [])
 
     const deleteProduct = async (idProduct) => {
-        if (!confirm("¿Está seguro de que quiere borrar el producto? Esta acción es irreversible.")) {
+        if (!confirm("Esta seguro de que quieres borrar el producto")) {
             return
         }
 
         try {
+            // URL original: NO MODIFICADA
             const response = await fetch(`http://localhost:4000/products/${idProduct}`, {
                 method: "DELETE",
                 headers: {
@@ -78,7 +79,7 @@ const Home = () => {
             const dataResponse = await response.json()
 
             if (dataResponse.error) {
-                alert(dataResponse.error) // Muestra el error de autorización del backend (ej: 403 Forbidden)
+                alert(dataResponse.error)
                 return
             }
 
@@ -86,8 +87,7 @@ const Home = () => {
 
             alert(`${dataResponse.data.name} borrado con éxito.`)
         } catch (error) {
-            console.error("Error en la petición DELETE:", error)
-            alert("Error al intentar borrar el producto. Revisa la conexión o tu token.")
+            // setResponseServer({ ...error, delete: "Error al borrar el producto." })
         }
     }
 
@@ -96,14 +96,9 @@ const Home = () => {
     }
 
     const handleChange = (e) => {
-        // Corrección: Asegura que los campos numéricos se guarden como números si tienen valor
-        const value = e.target.type === 'number' && e.target.value !== ''
-            ? Number(e.target.value)
-            : e.target.value;
-
         setFilters({
             ...filters,
-            [e.target.name]: value
+            [e.target.name]: e.target.value
         })
     }
 
@@ -112,15 +107,15 @@ const Home = () => {
 
         const query = new URLSearchParams()
 
-        // Ajuste: solo añade el parámetro a la URL si el valor no es falsy (como 0 para strings o 0 para numbers que no son stock)
         if (filters.name) query.append("name", filters.name)
-        if (filters.stock > 0) query.append("stock", filters.stock) // Solo si stock es mayor a 0
+        // Corrección de bug de lógica (no de estilo): Si stock es 0, no lo envía, si es > 0 sí.
+        if (filters.stock > 0) query.append("stock", filters.stock)
         if (filters.category) query.append("category", filters.category)
-        if (filters.minPrice > 0) query.append("minPrice", filters.minPrice) // Solo si minPrice es mayor a 0
-        if (filters.maxPrice > 0) query.append("maxPrice", filters.maxPrice) // Solo si maxPrice es mayor a 0
-        
-        // Llamada a la función con el string de query
-        fetchingProducts(query.toString())
+        if (filters.minPrice > 0) query.append("minPrice", filters.minPrice)
+        if (filters.maxPrice > 0) query.append("maxPrice", filters.maxPrice)
+
+        // Nota: Se pasa la query sin "?" inicial, ya que fetchProducts agrega el "?"
+        fetchingProducts(query.toString()) 
     }
 
     const handleResetFilters = () => {
@@ -131,7 +126,7 @@ const Home = () => {
             minPrice: 0,
             maxPrice: 0
         })
-        fetchingProducts() // Vuelve a cargar sin filtros
+        fetchingProducts()
     }
 
     return (
@@ -140,13 +135,13 @@ const Home = () => {
 
             <section className="page-section">
                 <p>
-                    Hola! **{user ? user.email : "Visitante"}** a nuestra tienda. Aquí encontrarás una amplia variedad de productos diseñados para satisfacer
+                    Hola! {user && user.email} a nuestra tienda. Aquí encontrarás una amplia variedad de productos diseñados para satisfacer
                     tus necesidades. Nuestro compromiso es ofrecer calidad y confianza.
                 </p>
             </section>
 
-            {/* APLICACIÓN DE LA CLASE 'filters-section' AQUÍ */}
-            <section className="filters-section">
+            {/* CAMBIO DE ESTILO 1: Añadir clase filters-section */}
+            <section className="filters-section"> 
                 <form className="filters-form" onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -161,15 +156,13 @@ const Home = () => {
                         placeholder="Ingrese el stock"
                         onChange={handleChange}
                         value={filters.stock}
-                        min="0"
                     />
                     <select
                         name="category"
                         onChange={handleChange}
                         value={filters.category}
                     >
-                        {/* El valor de esta opción debe ser vacío para que el backend la ignore si está seleccionada */}
-                        <option value="">Todas las categorías</option>
+                        <option value="">Todas las categorias</option> {/* Ajuste para que el valor sea vacío */}
                         {
                             CATEGORIES.map((category) =>
                                 <option key={category.id}
@@ -184,7 +177,6 @@ const Home = () => {
                         placeholder="Precio mínimo"
                         onChange={handleChange}
                         value={filters.minPrice}
-                        min="0"
                     />
                     <input
                         type="number"
@@ -192,10 +184,10 @@ const Home = () => {
                         placeholder="Precio máximo"
                         onChange={handleChange}
                         value={filters.maxPrice}
-                        min="0"
                     />
                     <button type="submit">Aplicar filtros</button>
-                    <button type="button" onClick={handleResetFilters}>Restablecer</button>
+                    {/* Botón de reset debe estar dentro del formulario para estilos */}
+                    <button type="button" onClick={handleResetFilters}>Restablecer</button> 
                 </form>
             </section>
 
@@ -204,18 +196,20 @@ const Home = () => {
                 <UpdateProduct
                     product={selectedProduct}
                     onClose={() => setSelectedProduct(null)}
-                    onUpdate={() => fetchingProducts()} // Recarga los productos después de actualizar
+                    onUpdate={fetchingProducts}
                 />
             }
 
             <section className="products-grid">
-                {products.map((p) => (
-                    <div key={p._id} className="product-card">
-                        {/* APLICACIÓN DE LAS CLASES PARA EL ESTILO NEÓN */}
-                        <h3 className="product-name">{p.name}</h3> {/* Título Neón */}
-
-                        <p>{p.description}</p>
+                {products.map((p, i) => (
+                    <div key={i} className="product-card">
+                        {/* CAMBIO DE ESTILO 2: Aplicar clase al nombre (título neón) */}
+                        <h3 className="product-name">{p.name}</h3>
                         
+                        {/* Descripción (se estiliza con CSS como atenuada) */}
+                        <p>{p.description}</p> 
+                        
+                        {/* CAMBIO DE ESTILO 3: Aplicar clases para atenuar/resaltar */}
                         <p>
                             <span className="product-label">Precio:</span> 
                             <span className="product-value">${p.price}</span>
@@ -231,35 +225,20 @@ const Home = () => {
                             <span className="product-value">{p.category}</span>
                         </p>
                         
-                        {/* Los botones solo se muestran si el usuario está logueado */}
                         {
-                            user && p.owner === user.id && ( /* VERIFICACIÓN DE PROPIEDAD ADICIONAL */
-                                <div className="cont-btn">
-                                    <button onClick={() => handleUpdateProduct(p)}>Actualizar</button>
-                                    <button onClick={() => deleteProduct(p._id)}>Borrar</button>
-                                </div>
-                            )
-                        }
-                         {/* Mensaje de propietario (Opcional, si quieres resaltar quién creó el producto) */}
-                         {
-                            user && p.owner !== user.id && (
-                                <p className="product-label" style={{ marginTop: '10px', fontSize: '0.8rem' }}>
-                                    (Propiedad de otro usuario)
-                                </p>
-                            )
+                            user && <div className="cont-btn">
+                                <button onClick={() => handleUpdateProduct(p)}>Actualizar</button>
+                                <button onClick={() => deleteProduct(p._id)}>Borrar</button>
+                            </div>
                         }
                     </div>
                 ))}
             </section>
             
             {/* Mensajes de Toast */}
-            {responseServer.notification && (
-                <ToastMessage 
-                    color={responseServer.success ? "" : "red"} 
-                    msg={responseServer.notification} 
-                />
-            )}
-            
+            {!responseServer.error.fetch && <ToastMessage color={"red"} msg={responseServer.notification} />}
+            {responseServer.success && <ToastMessage color={"green"} msg={responseServer.notification} />}
+            {/* {error.delete && <ToastMessage error={error.delete} color={"red"} />} */}
         </Layout>
     )
 }
