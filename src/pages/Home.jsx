@@ -245,7 +245,7 @@ const Home = () => {
             </section>
             
             {!responseServer.error.fetch && <ToastMessage color={"red"} msg={responseServer.notification} />}
-            {responseServer.success && <ToastMessage color={"green"} msg={responseServer.notification} />}
+            {responseServer.success && <ToastMessage color={""} msg={responseServer.notification} />}
         </Layout>
     )
 }
