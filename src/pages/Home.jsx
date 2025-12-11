@@ -139,8 +139,7 @@ const Home = () => {
 
             <section className="page-section">
                 <p>
-                    Bienvenido {user && user.email} a nuestra tienda. Aquí encontrarás una amplia variedad de productos diseñados para satisfacer
-                    tus necesidades. Nuestro compromiso es ofrecer calidad y confianza.
+                    Bienvenido {user && user.email} a mi página! Aquí encontrarás una amplia variedad de productos publicados por usuarios. Registrate, inicia sesión y agrega tus productos.
                 </p>
             </section>
 
