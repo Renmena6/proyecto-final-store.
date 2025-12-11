@@ -12,8 +12,8 @@
     --color-text-dimmed: #9CA3AF; /* Gris suave para etiquetas/descripciones atenuadas */
 
     /* Tipografías (Asumiendo que has importado 'Inter' y 'Poppins') */
-    --font-primary: 'Inter', sans-serif;
-    --font-heading: 'Poppins', sans-serif;
+--font-primary: 'Space Mono', monospace;
+    --font-heading: 'Space Mono', monospace;
 
     /* Efecto Neón (Sombra para simular brillo) */
     --shadow-neon-primary: 0 0 10px var(--color-neon-primary), 0 0 20px rgba(0, 255, 255, 0.4);
@@ -194,7 +194,7 @@ body {
 /* Botón Borrar (Danger Rojo) */
 .cont-btn button:last-child {
     border-color: var(--color-danger);
-    background-color: rgba(239, 68, 68, 0.2);
+    background-color: rgba(239, 68, 68, 0.363);
     color: var(--color-danger);
 }
 .cont-btn button:last-child:hover {

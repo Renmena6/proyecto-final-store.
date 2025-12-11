@@ -144,7 +144,7 @@ const Home = () => {
                 </p>
             </section>
 
-            {/* AÑADIR CLASE PARA EL ESTILO CYBERPUNK DE FILTROS */}
+            {/* AÑADIR CLASE PARA EL ESTILO DE FILTROS */}
             <section className="filters-section"> 
                 <form className="filters-form" onSubmit={handleSubmit}>
                     <input
